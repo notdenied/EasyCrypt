@@ -14,9 +14,11 @@
 
 Установка:
 
-```git clone git@github.com:notdenied/EasyCrypt.git
+```
+git clone git@github.com:notdenied/EasyCrypt.git
 cd EasyCrypt
-pip install -r requirements.txt```
+pip install -r requirements.txt
+```
 
 Далее предполагается, что вы находитесь в корне проекта.
 
@@ -35,3 +37,13 @@ pip install -r requirements.txt```
 - ```constants.py``` - константы проекта (словари и языки, размер окна клиента и так далее).
 - ```requirements.txt``` - зависимости проекта.
 - ```console.py``` - консольный клиент.
+
+Ниже представлены несколько скриншотов работы приложения.
+
+![Screen 1](images/screenshots/1.png "Шифрование с помощью Шифра Цезаря.")
+![Screen 2](images/screenshots/2.png "Декодирование при помощи различных методов анализа.")
+![Screen 3](images/screenshots/3.png "Декодирование при помощи различных методов анализа 2.")
+![Screen 4](images/screenshots/4.png "Vernam Encoding.")
+![Screen 5](images/screenshots/5.png "Vernam Decoding.")
+![Screen 6](images/screenshots/6.png "Steganography Example: Encoding.")
+![Screen 7](images/screenshots/7.png "Steganography Example: Decoding.")
