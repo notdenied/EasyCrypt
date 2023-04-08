@@ -12,7 +12,11 @@
 
 Проект покрыт базовыми тестами, все функции задокументированы.
 
-Для корректной работы сначала установите все зависимости: ```pip -r requirements.txt```
+Установка:
+
+```git clone git@github.com:notdenied/EasyCrypt.git
+cd EasyCrypt
+pip install -r requirements.txt```
 
 Далее предполагается, что вы находитесь в корне проекта.
 
