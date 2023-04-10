@@ -7,7 +7,7 @@ from constants import *
 class Caesar:
     @staticmethod
     def __shift_symbol(symbol: str, lang: str = 'ru', rotate: int = 0) -> str:
-        '''Correctly shifts given symbol in given lang.'''
+        """Correctly shifts given symbol in given lang."""
         if lang == 'ru' and symbol.lower() in RU_ALP:
             res = RU_ALP[(RU_IND[symbol.lower()] + rotate) % RU_LEN]
         elif lang == 'en' and symbol.lower() in EN_ALP:
@@ -20,7 +20,7 @@ class Caesar:
 
     @staticmethod
     def __rotate(text: str = "", lang: str = 'ru', rotate: int = 0) -> str:
-        '''Rotates given text by Caesar cipher; rotate can be any integer number.'''
+        """Rotates given text by Caesar cipher; rotate can be any integer number."""
         return "".join(Caesar.__shift_symbol(i, lang, rotate) for i in text)
 
     @staticmethod
@@ -32,27 +32,31 @@ class Caesar:
         return "".join(Caesar.__shift_symbol(i, lang, -rotate) for i in text)
 
     @staticmethod
-    def crack_by_frequency(text: str = "", lang: str = 'ru', common_count: int = 5) -> str:
-        '''Decodes the text with the most probable rotate (using [common_count] symbols' rotates).'''
-        if not 1 <= common_count <= 5:
-            raise ValueError('common_count not in [1, 5]!')
+    def crack_by_frequency(text: str = "", lang: str = 'ru', c_count: int = 5) -> str:
+        """Decodes the text with the most probable rotate (using [c_count] symbols' rotates)."""
+        if not 1 <= c_count <= 5:
+            raise ValueError('c_count not in [1, 5]!')
         if lang == 'ru':
-            top_5 = [i[0] for i in sorted(Counter(i for i in text.lower() if i in RU_ALP).items(
-            ), key=lambda x: x[-1], reverse=True)[:common_count]]
-            rotate = Counter((RU_IND[top_5[i]] - RU_IND[RU_TOP[i]]) %
-                             RU_LEN for i in range(min(common_count, len(top_5)))).most_common(1)[0][0]
+            top_5 = [i[0] for i in sorted(Counter(i for i in text.lower()
+                                                  if i in RU_ALP).items(),
+                                          key=lambda x: x[-1], reverse=True)[:c_count]]
+            rotate_vars = Counter((RU_IND[top_5[i]] - RU_IND[RU_TOP[i]]) %
+                                  RU_LEN for i in range(min(c_count, len(top_5))))
+            rotate = rotate_vars.most_common(1)[0][0]
         elif lang == 'en':
-            top_5 = [i[0] for i in sorted(Counter(i for i in text.lower() if i in EN_ALP).items(
-            ), key=lambda x: x[-1], reverse=True)[:common_count]]
-            rotate = Counter((EN_IND[top_5[i]] - EN_IND[EN_TOP[i]]) %
-                             EN_LEN for i in range(min(common_count, len(top_5)))).most_common(1)[0][0]
+            top_5 = [i[0] for i in sorted(Counter(i for i in text.lower()
+                                                  if i in EN_ALP).items(),
+                                          key=lambda x: x[-1], reverse=True)[:c_count]]
+            rotate_vars = Counter((EN_IND[top_5[i]] - EN_IND[EN_TOP[i]]) %
+                                  EN_LEN for i in range(min(c_count, len(top_5))))
+            rotate = rotate_vars.most_common(1)[0][0]
         else:
             raise ValueError('Unknown language passed!')
         return Caesar.__rotate(text, lang=lang, rotate=-rotate)
 
     @staticmethod
     def crack_by_enchant(text: str = "", lang='ru') -> str:
-        '''Decodes the text with the enchant morth analizer.'''
+        """Decodes the text with the enchant morth analizer."""
         if lang == 'ru':
             enc_dict = 'ru'
         else:
@@ -70,8 +74,9 @@ class Caesar:
 class Vigenere:
     @staticmethod
     def check_key(key: str, lang: str) -> None:
-        '''Checks key correctness.'''
-        if (lang == 'ru' and not all(i.lower() in RU_ALP for i in key)) or (lang == 'en' and not all(i.lower() in EN_ALP for i in key)):
+        """Checks key correctness."""
+        if (lang == 'ru' and not all(i.lower() in RU_ALP for i in key)) \
+                or (lang == 'en' and not all(i.lower() in EN_ALP for i in key)):
             raise ValueError(f'Wrong key language (expected: {lang}).')
 
     @staticmethod

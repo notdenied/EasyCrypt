@@ -3,20 +3,22 @@ from tkinter import ttk
 from tkinter import *
 from tkinter import filedialog as fd
 
-from constants import DEFAULT_W_SIZE, WINDOW_TITLE, LANGUAGES, CIPHERS, OPERATIONS
+from constants import DEFAULT_W_SIZE, WINDOW_TITLE, LANGUAGES, \
+    CIPHERS, OPERATIONS, NO_ROTATE_MESSAGE
 from ciphers import Caesar, Vernam, Vigenere
 from steganography import Steganography
 
 
 class App(tk.Tk):
     def __init__(self):
-        '''Main app class.'''
+        """Main app class."""
         super().__init__()
 
         self.run_style = ttk.Style()
         self.run_style.theme_use('alt')
         self.run_style.configure('TButton', background='red', foreground='white',
-                                 width=20, borderwidth=1, focusthickness=3, focuscolor='none')
+                                 width=20, borderwidth=1, focusthickness=3,
+                                 focuscolor='none')
         self.run_style.map('TButton', background=[('active', 'red')])
 
         self.title(WINDOW_TITLE)
@@ -171,7 +173,7 @@ class App(tk.Tk):
         self.notebook.add(self.second_frame, text="Steganography")
 
     def insert_from_file(self):
-        '''Inserts text to the first frame from file.'''
+        """Inserts text to the first frame from file."""
         name = fd.askopenfilename()
         if not name:
             return
@@ -181,19 +183,19 @@ class App(tk.Tk):
         self.input.insert(END, data)
 
     def input_picture_path(self):
-        '''Inserts input picture path to the second frame.'''
+        """Inserts input picture path to the second frame."""
         name = fd.askopenfilename()
         self.input_path.delete("1.0", "end")
         self.input_path.insert(END, name)
 
     def input_output_path(self):
-        '''Inserts output picture path to the second frame.'''
+        """Inserts output picture path to the second frame."""
         name = fd.asksaveasfilename()
         self.output_path.delete("1.0", "end")
         self.output_path.insert(END, name)
 
     def run_operation(self):
-        '''Main function to process input in first frame.'''
+        """Main function to process input in first frame."""
         text = self.input.get("1.0", END)[:-1]
         op = self.op_combobox.get()
         lang = self.lang_combobox.get()
@@ -208,6 +210,8 @@ class App(tk.Tk):
                 raise ValueError('Wrong cipher chosen!')
             if op == 'Encode':
                 if cip == 'Caesar':
+                    if not key:
+                        raise ValueError('Key not passed!')
                     mes = Caesar.encode(text, lang, int(key))
                 else:
                     if not key:
@@ -220,9 +224,9 @@ class App(tk.Tk):
                 if cip == 'Caesar':
                     if not key:
                         res = tk.messagebox.askquestion(
-                            title='Choose crack way', message='No roration passed, do you want to try auto cracking ways?')
+                            title='Choose crack way', message=NO_ROTATE_MESSAGE)
                         if res == 'yes':
-                            mes = f'Frequency cracker output:\n{Caesar.crack_by_frequency(text, lang)}\n\nEnchant cracker output:\n{Caesar.crack_by_enchant(text, lang)}'
+                            mes = self.crack_caesar(text, lang)
                         else:
                             return
                     else:
@@ -240,7 +244,7 @@ class App(tk.Tk):
         self.output.insert(END, mes)
 
     def run_operation2(self):
-        '''Main function to process input in second frame.'''
+        """Main function to process input in second frame."""
         try:
             text = self.input2.get("1.0", END)[:-1]
             in_path = self.input_path.get("1.0", END)[:-1]
@@ -257,6 +261,14 @@ class App(tk.Tk):
             mes = f"Error: {str(err)}"
         self.output2.delete("1.0", END)
         self.output2.insert(END, mes)
+        
+    @staticmethod
+    def crack_caesar(text: str, lang: str) -> str:
+        output = 'Frequency cracker output:\n'
+        output += Caesar.crack_by_frequency(text, lang)
+        output += '\n\nEnchant cracker output:\n'
+        output += Caesar.crack_by_enchant(text, lang)
+        return output
 
 
 if __name__ == "__main__":

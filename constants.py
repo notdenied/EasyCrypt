@@ -1,5 +1,3 @@
-
-
 RU_ALP = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
 RU_IND = {RU_ALP[i]: i for i in range(len(RU_ALP))}
 RU_LEN = len(RU_ALP)
@@ -34,3 +32,5 @@ Possible args:
 - input_path: path - input image path.
 - output_path: path - output image path.
 '''
+
+NO_ROTATE_MESSAGE = 'No roration passed, do you want to try auto cracking ways?'

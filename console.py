@@ -4,6 +4,8 @@ from constants import help_message, OPERATIONS, LANGUAGES, CIPHERS
 from ciphers import *
 from steganography import *
 
+from app import App
+
 args_ = sys.argv[1:]
 
 if not args_ or '--help' in args_:
@@ -30,6 +32,7 @@ if args['mode'] == 'cipher':
         with open(args['file'], 'r', encoding='utf-8') as f:
             text = f.read()
     op = args.get('op')
+    key = args.get('key')
     if op not in OPERATIONS:
         print('Wrong operation chosen!')
         exit()
@@ -54,8 +57,8 @@ if args['mode'] == 'cipher':
                 mes = Vernam.encode(text, key)
     else:
         if cip == 'Caesar':
-            if 'use_cracker' in args and args['use_cracker'] == 'true':
-                mes = f'Frequency cracker output:\n{Caesar.crack_by_frequency(text, lang)}\n\nEnchant cracker output:\n{Caesar.crack_by_enchant(text, lang)}'
+            if 'use_cracker' in args and args['use_cracker'] == 'true' or not key:
+                mes = App.crack_caesar(text, lang)
             else:
                 mes = Caesar.decode(text, lang, int(key))
         else:
