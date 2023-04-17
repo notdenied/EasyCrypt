@@ -1,7 +1,7 @@
 from collections import Counter
 import enchant
 
-from .constants import *
+from constants import *
 
 
 class Caesar:

@@ -3,10 +3,10 @@ from tkinter import ttk
 from tkinter import *
 from tkinter import filedialog as fd
 
-from .constants import DEFAULT_W_SIZE, WINDOW_TITLE, LANGUAGES, \
+from constants import DEFAULT_W_SIZE, WINDOW_TITLE, LANGUAGES, \
     CIPHERS, OPERATIONS, NO_ROTATE_MESSAGE
-from .ciphers import Caesar, Vernam, Vigenere
-from .steganography import Steganography
+from ciphers import Caesar, Vernam, Vigenere
+from steganography import Steganography
 
 
 class App(tk.Tk):

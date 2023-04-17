@@ -22,12 +22,11 @@ pip install -r requirements.txt
 
 Далее предполагается, что вы находитесь в корне проекта.
 
-- Запуск графического приложения: ```python3 main.py```
-- Запуск тестов: ```python3 tests.py --help```
-- Запуск консольного скрипта: ```python3 console.py --help```
-Например: ```python3 console.py --mode=cipher --text="36 73 28 29 6 12 80 36 20 29 24 27 3 90 94" --lang=en --op=Decode --cipher=Vernam --key=mipt```
-
-```python3 console.py --mode=steganography --op=Decode --input_path=images/test_images/lk_enc.png```
+- Запуск графического приложения: ```PYTHONPATH=src python3 main.py```
+- Запуск тестов: ```python3 src/tests.py --help```
+- Запуск консольного скрипта: ```python3 src/console.py --help```
+Например: ```python3 src/console.py --mode=cipher --text="36 73 28 29 6 12 80 36 20 29 24 27 3 90 94" --lang=en --op=Decode --cipher=Vernam --key=mipt```
+```python3 src/console.py --mode=steganography --op=Decode --input_path=images/test_images/lk_enc.png```
 
 Иерархия проекта такова:
 

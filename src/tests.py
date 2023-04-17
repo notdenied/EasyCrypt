@@ -1,6 +1,6 @@
 import unittest
-from src.ciphers import *
-from src.steganography import *
+from ciphers import *
+from steganography import *
 
 
 class TestAppApi(unittest.TestCase):

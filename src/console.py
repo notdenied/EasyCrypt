@@ -1,10 +1,10 @@
 import sys
 
-from src.constants import help_message, OPERATIONS, LANGUAGES, CIPHERS
-from src.ciphers import *
-from src.steganography import *
+from constants import help_message, OPERATIONS, LANGUAGES, CIPHERS
+from ciphers import *
+from steganography import *
 
-from main import App
+from app import App
 
 args_ = sys.argv[1:]
 
