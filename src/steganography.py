@@ -64,4 +64,5 @@ class Steganography:
         for i in range(0, len(text_b), 4):
             codes.append((text_b[i] << 6) + (text_b[i+1] <<
                          4) + (text_b[i+2] << 2) + text_b[i+3])
-        return ''.join(i.to_bytes().decode('utf-8') for i in codes)
+        return ''.join(i.to_bytes(length=1, byteorder='big', signed=False)
+                       .decode('utf-8') for i in codes)
