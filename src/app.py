@@ -200,8 +200,12 @@ class App(tk.Tk):
         op = self.op_combobox.get()
         lang = self.lang_combobox.get()
         cip = self.cipher.get()
-        key = self.key.get("1.0", END).strip().replace(
-            '\n', '').replace('\t', '')
+        key = self.key.get("1.0", END).strip()
+        warning = None
+        if '\n' in key:
+            key = key.replace(
+                '\n', '').replace('\t', '')
+            warning = "Warning: you have newline symbols in key input!"
         try:
             if op not in OPERATIONS:
                 raise ValueError('Wrong operation chosen!')
@@ -243,6 +247,8 @@ class App(tk.Tk):
                         mes = Vernam.decode(text, key)
         except Exception as err:
             mes = f"Error: {str(err)}"
+        if warning:
+            mes += '\n\n' + warning
         self.output.delete("1.0", END)
         self.output.insert(END, mes)
 
