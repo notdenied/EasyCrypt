@@ -200,7 +200,8 @@ class App(tk.Tk):
         op = self.op_combobox.get()
         lang = self.lang_combobox.get()
         cip = self.cipher.get()
-        key = self.key.get("1.0", END).strip()
+        key = self.key.get("1.0", END).strip().replace(
+            '\n', '').replace('\t', '')
         try:
             if op not in OPERATIONS:
                 raise ValueError('Wrong operation chosen!')
@@ -210,8 +211,10 @@ class App(tk.Tk):
                 raise ValueError('Wrong cipher chosen!')
             if op == 'Encode':
                 if cip == 'Caesar':
+                    key = ''.join(i for i in key if i.isdigit())
                     if not key:
-                        raise ValueError('Key not passed!')
+                        raise ValueError(
+                            'Key not passed! It should be a positive number.')
                     mes = Caesar.encode(text, lang, int(key))
                 else:
                     if not key:
@@ -261,7 +264,7 @@ class App(tk.Tk):
             mes = f"Error: {str(err)}"
         self.output2.delete("1.0", END)
         self.output2.insert(END, mes)
-        
+
     @staticmethod
     def crack_caesar(text: str, lang: str) -> str:
         output = 'Frequency cracker output:\n'
@@ -269,5 +272,3 @@ class App(tk.Tk):
         output += '\n\nEnchant cracker output:\n'
         output += Caesar.crack_by_enchant(text, lang)
         return output
-
-
